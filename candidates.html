@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script type="module" src="candidates.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 5px 0;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .vote-section {
+            margin: 20px auto;
+        }
+        .vote-section select, .vote-section button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>You are Connected to MetaMask</h1>
+    <p id="account">MetaMask Account: Not connected</p>
+    <p id="remainingTime">Remaining Time: Not available</p>
+
+    <div class="vote-section">
+        <select id="candidateSelect">
+            <option value="" disabled selected>Select a candidate</option>
+        </select>
+        <button id="voteButton">Vote</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Candidate Name</th>
+                <th>Candidate Votes</th>
+            </tr>
+        </thead>
+        <tbody id="candidatesTable"></tbody>
+    </table>
+</body>
+</html>
