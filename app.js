@@ -2,22 +2,29 @@
 let provider, signer, contract;
 
 // Configurație contract
-const contractAddress = "0x81dE7cD4157946AEf50fF241a809829262A67620"; // Înlocuiește cu adresa contractului deployat
+const contractAddress = "0xa0Cf0c43b64E85578C34a07252E973AB6a59c032"; // Înlocuiește cu adresa contractului deployat
 const contractABI = [
+    // ABI-ul contractului (copiat din Remix)
     {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "user",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "points",
-                "type": "uint256"
-            }
+        "inputs": [],
+        "name": "getAllCandidates",
+        "outputs": [
+            { "internalType": "string[]", "name": "", "type": "string[]" },
+            { "internalType": "uint[]", "name": "", "type": "uint[]" }
         ],
-        "name": "addReputation",
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getRemainingTime",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "uint256", "name": "candidateId", "type": "uint256" }],
+        "name": "vote",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

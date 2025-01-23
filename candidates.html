@@ -39,18 +39,43 @@
             margin: 5px;
             font-size: 16px;
         }
+        #addCandidateButton, #fundContractButton, #withdrawFundsButton {
+            display: none; /* Ascunde butoanele inițial */
+        }
+                
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <h1>You are Connected to MetaMask</h1>
     <p id="account">MetaMask Account: Not connected</p>
+    <p id="ownerStatus"></p>
     <p id="remainingTime">Remaining Time: Not available</p>
+    <p id="candidateCount">Număr candidați: Loading...</p>
+    <p id="hasVoted">Ați votat: Loading...</p>
+    <p id="contractBalance">Balanța contractului: Loading...</p>
+    <p id="averageVotes">Media voturilor per candidat: Se încarcă...</p>
+    <div id="loadingSpinner" style="display: none;">
+        <p>Se procesează tranzacția... <span class="spinner">&#9696;</span></p>
+    </div>
 
     <div class="vote-section">
         <select id="candidateSelect">
             <option value="" disabled selected>Select a candidate</option>
         </select>
         <button id="voteButton">Vote</button>
+        <!-- <button id="refreshButton">Refresh Candidates</button> -->
+        <button id="addCandidateButton">Add Candidate</button>
+        <button id="fundContractButton">Fund Contract</button>
+        <button id="withdrawFundsButton">Withdraw Funds</button>
     </div>
 
     <table>
