@@ -2,7 +2,7 @@
 let provider, signer, contract;
 
 // Configurație contract
-const contractAddress = "0xa0Cf0c43b64E85578C34a07252E973AB6a59c032"; // Adresa contractului din Remix
+const contractAddress = "0xf39a9bD7f14689d5EA86D57cBBC073F1a711cf35"; // Adresa contractului din Remix
 const contractABI = [
     // ABI-ul contractului (copiat din Remix)
     {
@@ -96,7 +96,7 @@ async function loadCandidates() {
         const candidateSelect = document.getElementById("candidateSelect");
 
         tableBody.innerHTML = ""; // Curăță tabelul
-        candidateSelect.innerHTML = '<option value="" disabled selected>Select a candidate</option>'; // Curăță dropdown-ul
+        candidateSelect.innerHTML = '<option value="" disabled selected>Selectează un candidat</option>'; // Curăță dropdown-ul
 
         for (let i = 0; i < names.length; i++) {
             // Adaugă candidați în tabel
@@ -133,7 +133,7 @@ async function loadCandidates() {
 async function loadRemainingTime() {
     try {
         const remainingTime = await contract.getRemainingTime();
-        document.getElementById("remainingTime").innerText = `Remaining Time: ${remainingTime} seconds`;
+        document.getElementById("remainingTime").innerText = `Timp rămas: ${remainingTime} secunde`;
     } catch (error) {
         console.error("Eroare la obținerea timpului rămas:", error);
     }
@@ -264,7 +264,7 @@ async function initialize() {
 
         const account = await signer.getAddress();
         console.log("Connected account:", account);
-        document.getElementById("account").innerText = `Account: ${account}`;
+        document.getElementById("account").innerText = `Cont: ${account}`;
 
         // Încarcă informațiile inițiale
         await loadCandidates(); // Încarcă candidații din contract
@@ -384,7 +384,7 @@ async function displayAverageVotes() {
         const average = averageVotes / candidateCount;
 
         // Afișează media cu 2 zecimale
-        document.getElementById("averageVotes").innerText = `Media voturilor per candidat: ${average.toFixed(2)}`;
+        document.getElementById("averageVotes").innerText = `Media voturilor per candidat: ${average.toFixed(4)}`;
     } catch (error) {
         console.error("Eroare la calcularea mediei voturilor:", error);
         alert(`Eroare la calcularea mediei voturilor: ${error.message}`);
@@ -417,5 +417,8 @@ document.getElementById("withdrawFundsButton").addEventListener("click", withdra
 // Eveniment pentru butonul "Add Candidate"
 document.getElementById("addCandidateButton").addEventListener("click", addCandidate);
 
+document.getElementById('toggle-theme').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+});
 // Inițializează aplicația
 initialize();

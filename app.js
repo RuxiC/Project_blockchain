@@ -2,7 +2,7 @@
 let provider, signer, contract;
 
 // Configurație contract
-const contractAddress = "0xa0Cf0c43b64E85578C34a07252E973AB6a59c032"; // Înlocuiește cu adresa contractului deployat
+const contractAddress = "0xf39a9bD7f14689d5EA86D57cBBC073F1a711cf35"; // Înlocuiește cu adresa contractului deployat
 const contractABI = [
     // ABI-ul contractului (copiat din Remix)
     {
