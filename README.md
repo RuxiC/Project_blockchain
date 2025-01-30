@@ -20,7 +20,7 @@ o ilustrarea interacțiunii dintre smart contracte.
 
 o deploy pe o rețea test Ethereum.  
 
-# • 📌 Cerințe opționale 
+# 📌 Cerințe opționale 
 
 o utilizare librării  
 
@@ -30,7 +30,7 @@ Withdrawal Pattern, Library Pattern etc.)
 
 ## 🌐 Partea 2: Interacțiunea cu blockchain printr-o aplicație web3
 
-# • 📌 Cerințe obligatorii
+# 📌 Cerințe obligatorii
 
 o Utilizarea unei librării web3 (exemple web3 sau ethersjs) și conectarea cu un 
 Web3 Provider pentru accesarea unor informații generale despre conturi 
@@ -39,7 +39,7 @@ Web3 Provider pentru accesarea unor informații generale despre conturi
 o Inițierea tranzacțiilor de transfer sau de apel de funcții, utilizând clase din 
 librăriile web3. 
 
-# • 📌 Cerințe opționale
+# 📌 Cerințe opționale
 
 o Tratare events (Observer Pattern).  
 
