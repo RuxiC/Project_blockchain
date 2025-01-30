@@ -2,7 +2,7 @@
 let provider, signer, contract;
 
 // Configuratie contract
-const contractAddress = "0xf39a9bD7f14689d5EA86D57cBBC073F1a711cf35"; // Adresa contractului din Remix
+const contractAddress = "0x78223C991432C20746d4aAcFC4305D54142DFD43"; // Adresa contractului din Remix
 const contractABI = [
     // ABI-ul contractului (copiat din Remix)
     {
@@ -186,6 +186,7 @@ async function castVote() {
     }
 }
 
+// Controlul stării tranzactiilor (tratarea exceptiilor) 
 // Adauga un candidat (doar pentru owner)
 async function addCandidate() {
     const candidateName = prompt("Introduceți numele candidatului:");
@@ -281,6 +282,7 @@ async function initialize() {
     }
 }
 
+// Controlul stării tranzactiilor (tratarea exceptiilor) 
 // Functie pentru alimentarea contractului cu ETH
 async function fundContract() {
     const amount = prompt("Introduceți suma de ETH pe care doriți să o trimiteți către contract:");
@@ -350,6 +352,8 @@ async function withdrawFunds() {
     }
 }
 
+// Cerinte opționale
+// Tratarea evenimentelor (Observer Pattern) - Ascultă evenimentele de pe blockchain
 async function listenToEvents() {
     // Asculta evenimentul "VoteCast"
     contract.on("VoteCast", (voter, candidateId, event) => {
