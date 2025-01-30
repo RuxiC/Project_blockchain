@@ -2,7 +2,7 @@
 let provider, signer, contract;
 
 // Configurație contract
-const contractAddress = "0xf39a9bD7f14689d5EA86D57cBBC073F1a711cf35"; // Înlocuiește cu adresa contractului deployat
+const contractAddress = "0xf39a9bD7f14689d5EA86D57cBBC073F1a711cf35"; // Înlocuiește cu adresa contractului pe care s-a dat deploy
 const contractABI = [
     // ABI-ul contractului (copiat din Remix)
     {
@@ -43,23 +43,23 @@ document.getElementById("connect").addEventListener("click", async () => {
     try {
         // Conectare la MetaMask
         provider = new ethers.providers.Web3Provider(window.ethereum);
-        await provider.send("eth_requestAccounts", []); // Solicită permisiunea de a accesa conturile
+        await provider.send("eth_requestAccounts", []); // Solicita permisiunea de a accesa conturile
         signer = provider.getSigner();
 
-        // Afișează contul conectat
+        // Afiseaza contul conectat
         const account = await signer.getAddress();
         console.log("Connected account:", account);
         document.getElementById("account").innerText = `Account: ${account}`;
 
-        // Afișează balanța contului conectat
+        // Afiseaza balanta contului conectat
         const balance = await provider.getBalance(account);
         document.getElementById("balance").innerText = `Balance: ${ethers.utils.formatEther(balance)} ETH`;
 
-        // Inițializează contractul
+        // Initializeaza contractul
         contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-        // Redirecționează către pagina cu candidați
-        window.location.href = "candidates.html"; // Asigură-te că această pagină există
+        // Redirectioneaza catre pagina cu candidati
+        window.location.href = "candidates.html"; 
     } catch (error) {
         console.error("Error connecting to MetaMask:", error);
         alert(`Failed to connect to MetaMask: ${error.message}`);

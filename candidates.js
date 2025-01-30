@@ -1,7 +1,7 @@
 // Variabile globale
 let provider, signer, contract;
 
-// Configurație contract
+// Configuratie contract
 const contractAddress = "0xf39a9bD7f14689d5EA86D57cBBC073F1a711cf35"; // Adresa contractului din Remix
 const contractABI = [
     // ABI-ul contractului (copiat din Remix)
@@ -86,20 +86,20 @@ const contractABI = [
     }
 ];
 
-// Încarcă candidații din contractul inteligent
+// Incarca candidatii din contractul inteligent
 async function loadCandidates() {
     try {
         const [names, votes] = await contract.getAllCandidates();
 
-        // Actualizează tabelul și meniul dropdown
+        // Actualizeaza tabelul si meniul dropdown
         const tableBody = document.getElementById("candidatesTable");
         const candidateSelect = document.getElementById("candidateSelect");
 
-        tableBody.innerHTML = ""; // Curăță tabelul
-        candidateSelect.innerHTML = '<option value="" disabled selected>Selectează un candidat</option>'; // Curăță dropdown-ul
+        tableBody.innerHTML = ""; 
+        candidateSelect.innerHTML = '<option value="" disabled selected>Selectează un candidat</option>'; 
 
         for (let i = 0; i < names.length; i++) {
-            // Adaugă candidați în tabel
+            // Adauga candidati in tabel
             const row = document.createElement("tr");
 
             const idCell = document.createElement("td");
@@ -116,20 +116,20 @@ async function loadCandidates() {
 
             tableBody.appendChild(row);
 
-            // Adaugă candidați în dropdown
+            // Adauga candidati in dropdown
             const option = document.createElement("option");
             option.value = i;
             option.innerText = names[i];
             candidateSelect.appendChild(option);
         }
-          // Afișează media voturilor
+          // Afiseaza media voturilor
           await displayAverageVotes();
     } catch (error) {
         console.error("Eroare la încărcarea candidaților din contract:", error);
     }
 }
 
-// Afișează timpul rămas pentru votare
+// Afiseaza timpul ramas pentru votare
 async function loadRemainingTime() {
     try {
         const remainingTime = await contract.getRemainingTime();
@@ -139,7 +139,7 @@ async function loadRemainingTime() {
     }
 }
 
-// Votează pentru un candidat selectat
+// Voteaza pentru un candidat selectat
 async function castVote() {
     const candidateId = document.getElementById("candidateSelect").value;
     if (!candidateId) {
@@ -148,26 +148,26 @@ async function castVote() {
     }
 
     try {
-        // Afișează spinner-ul
+        // Afiseaza spinner-ul
         document.getElementById("loadingSpinner").style.display = "block";
 
-        // Estimează gazul necesar pentru tranzacție
+        // Estimează gazul necesar pentru tranzactie
         const estimatedGas = await estimateGasForVote(candidateId);
         const gasPrice = await provider.getGasPrice();
         const gasCost = ethers.utils.formatEther(estimatedGas.mul(gasPrice));
 
-        // Afișează costul estimat al gazului
+        // Afiseaza costul estimat al gazului
         const confirmVote = confirm(`Costul estimat al gazului este: ${gasCost} ETH. Continuați cu votul?`);
         if (!confirmVote) {
             document.getElementById("loadingSpinner").style.display = "none"; // Ascunde spinner-ul
-            return; // Anulează dacă utilizatorul nu confirmă
+            return; // Anuleaza daca utilizatorul nu confirma
         }
 
-        // Trimite tranzacția cu limita de gaz estimată
+        // Trimite tranzactia cu limita de gaz estimata
         const tx = await contract.vote(candidateId, { gasLimit: estimatedGas.add(10000) });
         alert(`Tranzacția a fost trimisă: ${tx.hash}`);
 
-        // Așteaptă confirmarea tranzacției
+        // Asteapta confirmarea tranzactiei
         const receipt = await tx.wait();
         if (receipt.status === 1) {
             alert("Votul a fost înregistrat cu succes!");
@@ -175,7 +175,7 @@ async function castVote() {
             alert("Tranzacția a eșuat!");
         }
 
-        // Reîncarcă lista de candidați după vot
+        // Reincarca lista de candidati dupa vot
         await loadCandidates();
     } catch (error) {
         console.error("Eroare la votare:", error);
@@ -186,7 +186,7 @@ async function castVote() {
     }
 }
 
-// Adaugă un candidat (doar pentru owner)
+// Adauga un candidat (doar pentru owner)
 async function addCandidate() {
     const candidateName = prompt("Introduceți numele candidatului:");
     if (!candidateName) {
@@ -200,7 +200,7 @@ async function addCandidate() {
         await tx.wait();
         alert("Candidatul a fost adăugat!");
 
-        // Reîncarcă lista de candidați
+        // Reincarca lista de candidati
         await loadCandidates();
     } catch (error) {
         console.error("Eroare la adăugarea candidatului:", error);
@@ -208,8 +208,8 @@ async function addCandidate() {
     }
 }
 
-// Afișează butonul "Add Candidate" doar pentru owner
-// Verifică dacă utilizatorul este owner și afișează butoanele corespunzătoare
+// Afiseaza butonul "Adauga candidat" doar pentru owner
+// Verifica daca utilizatorul este owner si afiseaza butoanele corespunzatoare
 async function checkOwner() {
     const ownerAddress = "0x8f20c1Da4189E61A9bED3DBc9Cc3b913520dFA4D"; // Adresa owner-ului
     const account = await signer.getAddress();
@@ -227,7 +227,7 @@ async function checkOwner() {
     }
 }
 
-// Afișează numărul de candidați
+// Afiseaza numarul de candidati
 async function loadCandidateCount() {
     try {
         const count = await contract.candidateCount();
@@ -237,7 +237,7 @@ async function loadCandidateCount() {
     }
 }
 
-// Verifică dacă utilizatorul curent a votat
+// Verifica daca utilizatorul curent a votat
 async function checkHasVoted() {
     try {
         const account = await signer.getAddress();
@@ -248,7 +248,7 @@ async function checkHasVoted() {
     }
 }
 
-// Inițializare MetaMask și contract
+// Initializare MetaMask si contract
 async function initialize() {
     if (typeof window.ethereum === "undefined") {
         alert("MetaMask nu este instalat!");
@@ -266,14 +266,14 @@ async function initialize() {
         console.log("Connected account:", account);
         document.getElementById("account").innerText = `Cont: ${account}`;
 
-        // Încarcă informațiile inițiale
-        await loadCandidates(); // Încarcă candidații din contract
-        await loadRemainingTime(); // Afișează timpul rămas
-        await loadCandidateCount(); // Afișează numărul de candidați
-        await checkHasVoted(); // Verifică dacă utilizatorul a votat
-        await checkOwner(); // Verifică dacă utilizatorul este owner
-        await loadContractBalance(); // Încarcă balanța contractului
-        // Ascultă evenimentele
+        // Incarca informatiile initiale
+        await loadCandidates(); // Incarca candidatii din contract
+        await loadRemainingTime(); // Afiseaza timpul ramas
+        await loadCandidateCount(); // Afiseaza numarul de candidati
+        await checkHasVoted(); // Verifica daca utilizatorul a votat
+        await checkOwner(); // Verifica daca utilizatorul este owner
+        await loadContractBalance(); // Incarca balanta contractului
+        // Asculta evenimentele
         listenToEvents(); 
     } catch (error) {
         console.error("Eroare la inițializare:", error);
@@ -281,7 +281,7 @@ async function initialize() {
     }
 }
 
-// Funcție pentru alimentarea contractului cu ETH
+// Functie pentru alimentarea contractului cu ETH
 async function fundContract() {
     const amount = prompt("Introduceți suma de ETH pe care doriți să o trimiteți către contract:");
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
@@ -291,20 +291,20 @@ async function fundContract() {
 
     try {
         const tx = await contract.fundContract({
-            value: ethers.utils.parseEther(amount) // Convertim ETH în wei
+            value: ethers.utils.parseEther(amount) // Convertim ETH in wei
         });
         alert(`Tranzacția a fost trimisă: ${tx.hash}`);
         await tx.wait();
         alert(`Contractul a fost alimentat cu ${amount} ETH!`);
 
-        // Actualizează balanța contractului
+        // Actualizeaza balanta contractului
         await loadContractBalance();
     } catch (error) {
         console.error("Eroare la alimentarea contractului:", error);
         alert(`Eroare la alimentarea contractului: ${error.message}`);
     }
 }
-// Afișează balanța contractului doar pentru owner
+// Afiseaza balanta contractului doar pentru owner
 async function loadContractBalance() {
     const ownerAddress = "0x8f20c1Da4189E61A9bED3DBc9Cc3b913520dFA4D"; // Adresa owner-ului
     const account = await signer.getAddress();
@@ -312,7 +312,7 @@ async function loadContractBalance() {
     if (account.toLowerCase() === ownerAddress.toLowerCase()) {
         try {
             const balance = await contract.getContractBalance();
-            const balanceInETH = ethers.utils.formatEther(balance); // Convertim din wei în ETH
+            const balanceInETH = ethers.utils.formatEther(balance); // Convertim din wei in ETH
             document.getElementById("contractBalance").innerText = `Balanța contractului: ${balanceInETH} ETH`;
         } catch (error) {
             console.error("Eroare la obținerea balanței contractului:", error);
@@ -322,7 +322,7 @@ async function loadContractBalance() {
         document.getElementById("contractBalance").innerText = "Balanța contractului: Disponibilă doar pentru owner.";
     }
 }
-// Funcție pentru retragerea fondurilor din contract
+// Functie pentru retragerea fondurilor din contract
 async function withdrawFunds() {
     const recipient = prompt("Introduceți adresa destinatarului:");
     if (!ethers.utils.isAddress(recipient)) {
@@ -342,7 +342,7 @@ async function withdrawFunds() {
         await tx.wait();
         alert(`Fondurile au fost retrase către ${recipient}!`);
 
-        // Actualizează balanța contractului
+        // Actualizeaza balanta contractului
         await loadContractBalance();
     } catch (error) {
         console.error("Eroare la retragerea fondurilor:", error);
@@ -351,16 +351,16 @@ async function withdrawFunds() {
 }
 
 async function listenToEvents() {
-    // Ascultă evenimentul "VoteCast"
+    // Asculta evenimentul "VoteCast"
     contract.on("VoteCast", (voter, candidateId, event) => {
         console.log(`Vot înregistrat: ${voter} a votat pentru candidatul ${candidateId}`);
         alert(`Vot înregistrat: ${voter} a votat pentru candidatul ${candidateId}`);
     });
 
-    // Ascultă evenimentul "CandidateRegistered"
+    // Asculta evenimentul "CandidateRegistered"
     contract.on("CandidateRegistered", (candidateId, name, event) => {
         console.log(`Candidat adăugat: ${name} cu ID-ul ${candidateId}`);
-        loadCandidates(); // Reîncarcă lista de candidați
+        loadCandidates(); // Reincarca lista de candidati
     });
 }
 
@@ -380,10 +380,10 @@ async function displayAverageVotes() {
         const averageVotes = await contract.calculateAverageVotes();
         const candidateCount = await contract.candidateCount();
 
-        // Calculează media cu zecimale
+        // Calculeaza media cu zecimale
         const average = averageVotes / candidateCount;
 
-        // Afișează media cu 2 zecimale
+        // Afiseaza media cu 4 zecimale
         document.getElementById("averageVotes").innerText = `Media voturilor per candidat: ${average.toFixed(4)}`;
     } catch (error) {
         console.error("Eroare la calcularea mediei voturilor:", error);
@@ -392,21 +392,14 @@ async function displayAverageVotes() {
 }
 
 
-// Apelează funcția după inițializare
+// Apeleaza functia dupa initializare
 initialize().then(() => {
     displayAverageVotes();
 });
 
 
-// Adaugă eveniment pentru butonul de votare
+// Adauga eveniment pentru butonul de votare
 document.getElementById("voteButton").addEventListener("click", castVote);
-
-/*
-// Buton pentru reîncărcarea listei de candidați
-document.getElementById("refreshButton").addEventListener("click", async () => {
-    await loadCandidates();
-});
-*/
 
 // Eveniment pentru butonul "Fund Contract"
 document.getElementById("fundContractButton").addEventListener("click", fundContract);
@@ -420,5 +413,5 @@ document.getElementById("addCandidateButton").addEventListener("click", addCandi
 document.getElementById('toggle-theme').addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
 });
-// Inițializează aplicația
+// Initializeaza aplicatia
 initialize();

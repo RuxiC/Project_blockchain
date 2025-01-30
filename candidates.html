@@ -7,7 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <script type="module" src="candidates.js"></script>
     <style>
-        /* Reset CSS */
         * {
             margin: 0;
             padding: 0;
@@ -97,7 +96,7 @@
         }
 
         #addCandidateButton, #fundContractButton, #withdrawFundsButton {
-            display: none; /* Ascunde butoanele inițial */
+            display: none; /* Ascunde butoanele initial */
             margin: 5px;
         }
 
@@ -115,13 +114,13 @@
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
-        background-color: #28a745; /* Verde - pentru a indica acțiuni pozitive */
+        background-color: #28a745; 
         color: white;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .owner-buttons button:hover {
-            background-color: #218838; /* O nuanță mai închisă la hover */
+            background-color: #218838; 
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
@@ -133,7 +132,7 @@
 
         /* Stiluri pentru Dark Mode */
         body.dark-mode .owner-buttons button {
-            background-color: #6a9bd8; /* O nuanță de albastru deschis */
+            background-color: #6a9bd8; 
             color: #fff;
         }
 
@@ -210,13 +209,13 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            background-color: #4a90e2; /* Albastru deschis */
+            background-color: #4a90e2; 
             color: white;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         #toggle-theme:hover {
-            background-color: #357abd; /* O nuanță mai închisă la hover */
+            background-color: #357abd; 
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
@@ -228,7 +227,7 @@
 
         /* Stiluri pentru Dark Mode */
         body.dark-mode #toggle-theme {
-            background-color: #4a90e2; /* Aceeași culoare și în dark mode */
+            background-color: #4a90e2; 
             color: white;
         }
 
